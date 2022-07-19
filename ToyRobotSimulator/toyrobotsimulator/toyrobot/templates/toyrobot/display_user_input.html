@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+        <h1>Welcome to Toy Robot Challenge</h1>
+        <p>The robot must be initially placed on the 5 x 5 table</p>
+        <table>
+            <th>Command</th>
+            <th>Description</th>
+            <tr>
+                <td> PLACE x,y,f </td>
+                <td> - where x=[0-{}), y=[0-{}), f(facing)={} e.g PLACE 0,1,EAST </td>
+            </tr>
+            <tr>
+                <td> MOVE </td>
+                <td> - moves the robot one unit forward in the direction it is currently facing </td>
+            </tr>
+            <tr>
+                <td> LEFT|RIGHT </td>
+                <td> - rotates the robot 90 degrees in the specified direction without changing robot's position </td>
+            </tr>
+            <tr>
+                <td> REPORT </td>
+                <td> - announces the x y f of the robot </td>
+            </tr>
+        </table>
+
+        <p>Issue the command separated by a new line. Checking of the validity of the commands is not yet fully implemented.</p>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Save">
+        </form>
+        <div>Result: {{ result }}</div>
+        <div><a href="/">Back</a></div>
+
+    </div>
+
+</body>
+</html>

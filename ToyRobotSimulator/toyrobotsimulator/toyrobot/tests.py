@@ -41,10 +41,11 @@ class TestSimulator(TestCase):
     def test_setup_simulator(self,):
         kwargs = {'file': None}
         self.simulator.setup_simulator(**kwargs)
-        self.assertEqual(len(self.simulator._setup), 2)
+        self.assertEqual(len(self.simulator.instance()._setup), 2)
         self.simulator.setup_simulator(**kwargs)
-        self.assertEqual(len(self.simulator._setup), 3)
+        self.assertEqual(len(self.simulator.instance()._setup), 3)
         self.mock_setup.assert_called()
+
 
     def test_run_commands(self, ):
         setup = self.mock_setup
@@ -57,8 +58,10 @@ class TestSimulator(TestCase):
     def test_run_simulator(self, mock_run_commands):
         kwargs = {'file': None}
         self.simulator.setup_simulator(**kwargs)
+        mock_run_commands.return_value = self.simulator.instance()._setup[0]
         self.simulator.run_simulator()
-        mock_run_commands.assert_called_once_with(setup=self.simulator._setup[0])
+        setup = self.simulator.instance()._setup[0]
+        mock_run_commands.assert_called_once_with(setup=setup)
 
 
 

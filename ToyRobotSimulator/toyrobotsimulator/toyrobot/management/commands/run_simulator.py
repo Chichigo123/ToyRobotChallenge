@@ -15,8 +15,7 @@ class Setup(object):
         self._setup_table(**kwargs)
         config_util = ToyRobotCommandsConfigUtil(kwargs.pop('config', None))
         if config_util:
-            if not kwargs.get('file', None):
-                self._setup_help_and_display(config_util, **kwargs)
+            self._setup_help_and_display(config_util, **kwargs)
             self._setup_commands(config_util, **kwargs)
             self._setup_toy_robot(config_util, **kwargs)
 
@@ -37,7 +36,9 @@ class Setup(object):
 
     def _setup_commands(self, config_util, **kwargs):
         while not self._commands:
-            self._commands = kwargs.pop('commands', None) or config_util.get_inputs(file=kwargs.get('file', None))
+            self._commands = kwargs.pop('commands', None) \
+                             or config_util.get_inputs(file=kwargs.get('file', None),
+                                                       test_commands=kwargs.get('test_commands', None))
 
     def _setup_new_toy_robot_position(self, new_position):
         self._toy_robot._set_new_position(new_position)
@@ -47,13 +48,13 @@ class Setup(object):
 
 class Simulator(object):
     # Singleton implementation of Simulator, to be able to create multiple sim_objects running on the simulator
-    _setup = []
     _instance = None
 
     def __new__(cls, ):
         if cls._instance is None:
             if cls._instance is None:
                 cls._instance = super(Simulator, cls).__new__(cls)
+                cls._instance._setup = []
         return cls._instance
 
     @classmethod
@@ -67,8 +68,8 @@ class Simulator(object):
         def wrapper(*args, **kwargs):
             setup = kwargs.get('setup', None)
             if setup._toy_robot._position:
-                func(*args, **kwargs)
-                return
+                result = func(*args, **kwargs)
+                return result
             raise RuntimeError('Toy robot not yet placed')
         return wrapper
 
@@ -97,15 +98,26 @@ class Simulator(object):
 
             toy_robot._position = new_position
 
+        return setup
+
     @classmethod
     def run_simulator(cls, ):
-        for setup in cls._setup:
-            cls.run_commands(setup=setup)
+        updated_setup = []
+        for idx, setup in enumerate(cls.instance()._setup):
+            updated_setup.append(cls.run_commands(setup=setup))
+        cls.update(updated_setup)
+        return cls
+
 
     @classmethod
     def setup_simulator(cls, **kwargs):
-        cls._setup.append(Setup(**kwargs))
+        cls.instance()._setup.append(Setup(**kwargs))
         return cls
+
+
+    @classmethod
+    def update(cls, updated_setup):
+        cls.instance()._setup = updated_setup
 
 
 class Command(BaseCommand):

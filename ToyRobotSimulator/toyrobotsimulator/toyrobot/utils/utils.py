@@ -30,7 +30,7 @@ class ToyRobotCommandsConfigUtil(object):
                "{}\t\t\t\t\t- moves the robot one unit forward in the direction it is currently facing\n" \
                "{}\t\t\t\t- rotates the robot 90 degrees in the specified direction without changing robot's position\n"\
                "{}\t\t\t\t\t- announces the x y f of the robot\n\n" \
-               "Once done giving the commands, please hit Enter to start the simulation."\
+               "Once done giving the commands, please hit Enter (newline) to start the simulation."\
                .format(table.x, table.y, '|'.join(config.get('commands', {}).get('start', [])),
                        table.x, table.y, '|'.join(config.get('directions', [])),
                        '|'.join(config.get('commands', {}).get('movement', [])),
