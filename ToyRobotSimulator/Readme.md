@@ -13,13 +13,23 @@
      pip install -r requirements.txt
 
 
-##Run the Simulator
-#### After installing the dependecies, run the simulation:
+## After installing the dependecies, run the simulation:
+##Run the Simulator via console
+
      cd ToyRobotChallenge\ToyRobotSimulator\toyrobotsimulator
      python manage.py run_simulator --help
      python manage.py run_simulator
+
+##Run the Simulator via browser (ongoing fixes)
+     cd ToyRobotChallenge\ToyRobotSimulator\toyrobotsimulator
+     python manage.py runserver
 
 
 ##Run the Tests
      cd ToyRobotChallenge\ToyRobotSimulator\toyrobotsimulator
      python manage.py test
+
+
+###To DO:
+#### 1.) Implement file based input handling
+#### 2.) Fix web based input handling
