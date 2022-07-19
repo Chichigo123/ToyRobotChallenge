@@ -15,7 +15,8 @@ class Setup(object):
         self._setup_table(**kwargs)
         config_util = ToyRobotCommandsConfigUtil(kwargs.pop('config', None))
         if config_util:
-            self._setup_help_and_display(config_util, **kwargs)
+            if not kwargs.get('file', None):
+                self._setup_help_and_display(config_util, **kwargs)
             self._setup_commands(config_util, **kwargs)
             self._setup_toy_robot(config_util, **kwargs)
 
@@ -36,7 +37,7 @@ class Setup(object):
 
     def _setup_commands(self, config_util, **kwargs):
         while not self._commands:
-            self._commands = kwargs.pop('commands', None) or config_util.get_inputs(kwargs.pop('file', None))
+            self._commands = kwargs.pop('commands', None) or config_util.get_inputs(file=kwargs.get('file', None))
 
     def _setup_new_toy_robot_position(self, new_position):
         self._toy_robot._set_new_position(new_position)

@@ -61,17 +61,15 @@ class ToyRobotCommandsConfigUtil(object):
     @classmethod
     def get_inputs(cls, file=None, test_commands=None):
         pattern = cls.build_regex_pattern()
-
+        commands = test_commands or []
         def filter_input(command):
             return command if re.match(pattern, command) else None
 
         if file:
-            print('Toy Robot Challenge using file')
-            return
+            raise RuntimeError('Toy Robot Challenge using file. Not yet supported.')
 
         # Switch to user based input
         user_input = None
-        commands = test_commands or []
         if not test_commands:
             while (user_input != ''):
                 user_input = str.upper(input())

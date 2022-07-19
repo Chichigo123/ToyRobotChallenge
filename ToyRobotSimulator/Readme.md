@@ -15,11 +15,11 @@
 
 ##Run the Simulator
 #### After installing the dependecies, run the simulation:
-     cd ToyRobotChallenge/ToyRobotSimulator/toyrobotsimulator
+     cd ToyRobotChallenge\ToyRobotSimulator\toyrobotsimulator
      python manage.py run_simulator --help
      python manage.py run_simulator
 
 
 ##Run the Tests
-     cd ToyRobotChallenge/ToyRobotSimulator/toyrobotsimulator
+     cd ToyRobotChallenge\ToyRobotSimulator\toyrobotsimulator
      python manage.py test
