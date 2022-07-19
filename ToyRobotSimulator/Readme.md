@@ -23,6 +23,7 @@
 ##Run the Simulator via browser (ongoing fixes)
      cd ToyRobotChallenge\ToyRobotSimulator\toyrobotsimulator
      python manage.py runserver
+     Go to browser, type http://127.0.0.1:8000/
 
 
 ##Run the Tests
